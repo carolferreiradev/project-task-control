@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo 'Checking before committing...'
+
+# Check Prettier
+npm run prettier ||
+(
+        echo '❌ Prettier Check Failed ❌';
+        false;
+)
+
+# Check ESLint
+npm run lint ||
+(
+        echo '❌ ESLint Check Failed ❌'
+        false;
+)
+
+# Check tsconfig
+npm run types ||
+(
+        echo '❌ Typescript Check Failed ❌ '
+        false;
+)
+
+# Check test
+npm run test ||
+(
+        echo '❌ Test Check Failed ❌ '
+        false;
+)
+
+
+echo '✅ Success... Its committing now. ✅'
+
